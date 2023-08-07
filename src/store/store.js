@@ -8,28 +8,23 @@ const counterReducer = (state = {counter: 0}, action) => {
             counter: state.counter + 1
         }
     }
-
-    //increase by user input 
-    if(action.type === 'increase') {
-        return {
-            counter: state.counter + action.amount,
-        };
-    }
-
     // user subtracts something 
     if(action.type === 'decrement') {
         return {
             counter: state.counter - 1
         }
     }
-    // user adds ammount to async (multiply)
-    // if(action.type === 'async') {
-    //     state.a
-    // }
+
+    // users multiply
+    if(action.type === 'multiply') {
+        return {
+            counter: state.counter * action.amount
+        }
+    }
+
     // returns state with no changes 
     return state;
 };
-
 
 const store = createStore(counterReducer);
 

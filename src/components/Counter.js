@@ -6,23 +6,31 @@ import classes from './Counter.module.css';
 const Counter = () => {
   const dispatch = useDispatch();  
   const counter = useSelector(state => state.counter);
-  const [inputElement, setInputValue] = useState('');
+  // state to hold user input
+  const [inputValue, setInputValue] = useState('');
 
   const toggleCounterHandler = () => {};
 
   const incrementHandler = () => {
-    dispatch({type: 'increment', amount: 5});
-    // if(inputElement) {
-      
-    // }
-   
+    dispatch({type: 'increment'});
   };
   const decrementHandler = () => {
     dispatch({type: 'decrement'});
   };
-  // const inputChangeHandler = (event) =>{
-  //   setInputValue(event.target.value);
-  // }
+  const inputChangeHandler = (event) => {
+    setInputValue(event.target.value);
+  }
+  const multiplyHandler = () => {
+     // Convert the inputValue to a number (it comes as a string from the input field)
+    const amount = parseInt(inputValue); 
+    // change input value from string into a number
+    dispatch({ type: 'mulitply'});
+    
+    // resets the input field
+    setInputValue('');
+    console.log(amount);
+    console.log();
+  }
 
 
   return (
@@ -34,8 +42,8 @@ const Counter = () => {
         <button className={classes.button} onClick={decrementHandler}>Decrement</button>
       </div>
       <div>
-       <input className={classes.input} value={inputElement} ></input>
-      <button className={classes.button} onClick={incrementHandler}>Increase by </button>
+       <input className={classes.input}  onChange={inputChangeHandler} value={inputValue}></input>
+      <button className={classes.button} onClick={multiplyHandler}>Increase by </button>
       </div>
       <button onClick={toggleCounterHandler}>Toggle Counter</button>
     </main>
