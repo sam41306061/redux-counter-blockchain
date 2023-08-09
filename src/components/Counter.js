@@ -3,11 +3,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import classes from './Counter.module.css';
 
 
+
 const Counter = () => {
   const dispatch = useDispatch();  
   const counter = useSelector(state => state.counter);
   // state to hold user input
-  const [inputValue, setInputValue] = useState('');
+  const [input, setInput] = useState('');
 
   const toggleCounterHandler = () => {};
 
@@ -17,19 +18,19 @@ const Counter = () => {
   const decrementHandler = () => {
     dispatch({type: 'decrement'});
   };
-  const inputChangeHandler = (event) => {
-    setInputValue(event.target.value);
-  }
   const multiplyHandler = () => {
      // Convert the inputValue to a number (it comes as a string from the input field)
-    const amount = parseInt(inputValue); 
+    const multiplier = parseInt(input); 
     // change input value from string into a number
-    dispatch({ type: 'mulitply'});
-    
-    // resets the input field
-    setInputValue('');
-    console.log(amount);
-    console.log();
+    if (!isNaN(multiplier)) {
+      dispatch({ type: 'multiply', payload: multiplier.toString() });
+      // resets the input field
+      setInput('');
+    } else {
+      // Handle the case where the input is not a valid number
+      console.log('Input is not a valid number');
+    }
+    console.log(input)
   }
 
 
@@ -42,7 +43,7 @@ const Counter = () => {
         <button className={classes.button} onClick={decrementHandler}>Decrement</button>
       </div>
       <div>
-       <input className={classes.input}  onChange={inputChangeHandler} value={inputValue}></input>
+       <input className={classes.input} type="number" value={input} onChange={event => setInput(event.target.value)}></input>
       <button className={classes.button} onClick={multiplyHandler}>Increase by </button>
       </div>
       <button onClick={toggleCounterHandler}>Toggle Counter</button>

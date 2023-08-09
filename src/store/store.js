@@ -14,11 +14,10 @@ const counterReducer = (state = {counter: 0}, action) => {
             counter: state.counter - 1
         }
     }
-
     // users multiply
     if(action.type === 'multiply') {
         return {
-            counter: state.counter * action.amount
+            counter: state.counter * parseInt(action.payload)
         }
     }
 
