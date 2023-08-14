@@ -5,8 +5,8 @@ async function main() {
   // deploy the contract 
   const counter = await Counter.deploy();
   await counter.deployed();
+  // log the address
   console.log(counter.address);
-
 
 }
 

@@ -1,30 +1,15 @@
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+
+import reducer from './reducer.js';
 
 
-const counterReducer = (state = {counter: 0}, action) => { 
-    //  users adds something 
-    if(action.type === 'increment') {
-        return {
-            counter: state.counter + 1
-        }
-    }
-    // user subtracts something 
-    if(action.type === 'decrement') {
-        return {
-            counter: state.counter - 1
-        }
-    }
-    // users multiply
-    if(action.type === 'multiply') {
-        return {
-            counter: state.counter * parseInt(action.payload)
-        }
-    }
-
-    // returns state with no changes 
-    return state;
+const initialState = {
+    counter: 0,
 };
-
-const store = createStore(counterReducer);
+const middleware = [thunk]
+const store = createStore(reducer, initialState, composeWithDevTools(applyMiddleware(...middleware)))
 
 export default store;
+
+console.log(initialState);
