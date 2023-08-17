@@ -1,3 +1,5 @@
+import { ethers } from 'ethers';
+
 const initialState = {
     counter: 0,
   };
@@ -9,7 +11,7 @@ const initialState = {
       case 'MULTIPLY_COUNTER':
         return {
           ...state,
-          counter: await contract.methods.getCounter().call(),
+          counter: new ethers.Contract.methods.getCounter().call(),
         };
       default:
         return state;
