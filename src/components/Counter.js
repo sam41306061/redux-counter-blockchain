@@ -2,35 +2,27 @@ import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import classes from './Counter.module.css';
 
+import { counterActions } from '../store/store';
 
 
 const Counter = () => {
   const dispatch = useDispatch();  
-  const counter = useSelector(state => state.counter);
+  const counter = useSelector((state) => state.counter);
+  const show = useSelector((state) => state.showCounter);
+
   // state to hold user input
   const [input, setInput] = useState('');
 
   const toggleCounterHandler = () => {};
 
   const incrementHandler = () => {
-    dispatch({type: 'increment'});
+    dispatch(counterActions.increment);
   };
   const decrementHandler = () => {
-    dispatch({type: 'decrement'});
+    dispatch(counterActions.decrement);
   };
   const multiplyHandler = () => {
-     // Convert the inputValue to a number (it comes as a string from the input field)
-    const multiplier = parseInt(input); 
-    // change input value from string into a number
-    if (!isNaN(multiplier)) {
-      dispatch({ type: 'multiply', payload: multiplier.toString() });
-      // resets the input field
-      setInput('');
-    } else {
-      // Handle the case where the input is not a valid number
-      console.log('Input is not a valid number');
-    }
-    console.log(input)
+    dispatch(counterActions.multiply)
   }
 
 
