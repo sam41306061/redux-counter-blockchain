@@ -1,43 +1,42 @@
 import { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, } from 'react-redux';
 import classes from './Counter.module.css';
 
-
+import { counterActions } from '../store/counter';
 
 const Counter = () => {
   const dispatch = useDispatch();  
-  const counter = useSelector(state => state.counter);
-  // state to hold user input
+  const counter = useSelector((state) => state.counter.counter);
+  const show = useSelector((state) => state.counter.showCounter);
+
   const [input, setInput] = useState('');
 
-  const toggleCounterHandler = () => {};
-
   const incrementHandler = () => {
-    dispatch({type: 'increment'});
+    dispatch(counterActions.increment());
   };
   const decrementHandler = () => {
-    dispatch({type: 'decrement'});
+    dispatch(counterActions.decrement());
   };
   const multiplyHandler = () => {
-     // Convert the inputValue to a number (it comes as a string from the input field)
-    const multiplier = parseInt(input); 
-    // change input value from string into a number
-    if (!isNaN(multiplier)) {
-      dispatch({ type: 'multiply', payload: multiplier.toString() });
-      // resets the input field
+    const multiplier = parseInt(input);
+    if(!isNaN(multiplier)) {
+      dispatch(counterActions.multiply(multiplier.toString())); // multiplier.toString is now the payload
       setInput('');
     } else {
-      // Handle the case where the input is not a valid number
-      console.log('Input is not a valid number');
+      console.log('Input is not validnumber')
     }
-    console.log(input)
+    
   }
+  const toggleCounterHandler = () => {
+    dispatch(counterActions.toggle());
+  };
+
 
 
   return (
     <main className={classes.counter}>
       <h1>Redux Counter</h1>
-      <div className={classes.value}>{counter}</div>
+      { show ? <div className={classes.value}>{counter}</div> : null}
       <div>
         <button className={classes.button} onClick={incrementHandler}>Increment</button>
         <button className={classes.button} onClick={decrementHandler}>Decrement</button>
