@@ -1,4 +1,5 @@
 import { createSlice} from "@reduxjs/toolkit";
+import { ethers } from "ethers";
 
 const initalAccountsState = {
     connection: null,
@@ -12,6 +13,10 @@ const accountsSlice = createSlice({
     initialState: initalAccountsState,
     reducers: {
         providerLoaded(state,action) {
+            const provider = new ethers.providers.Web3Provider(action.payload.connection);
+            provider.getNetwork().then(network => {
+                state.chainId = network.chainId;
+            })
             state.connection = action.payload.connection;
         },
         networkLoaded(state,action) {
