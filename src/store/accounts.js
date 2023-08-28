@@ -1,4 +1,4 @@
-import { createSlice} from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import { ethers } from "ethers";
 
 const initalAccountsState = {
@@ -8,16 +8,49 @@ const initalAccountsState = {
     balance: null
 }
 
+export const loadProvider = createAsyncThunk(
+    'accounts/loadProvider',
+    async() => {
+        const connection = new ethers.providers.Web3Provider(window.ethereum)
+        return connection;
+    }
+);
+
+export const loadNetwork = createAsyncThunk(
+    'accounts/loadNetwork',
+    async() => {
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const network = await provider.getNetwork();
+        return network;
+    }
+)
+
+export const loadAccount = createAsyncThunk(
+    'accounts/loadAccount',
+    async() => {
+        const account = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        return account[0];
+    }
+);
+
+export const loadBalance = createAsyncThunk(
+    'accounts/loadBalance',
+    async() => {
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const account = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        const balance = await provider.getBalance(account)
+        return balance;
+    }
+)
+
+
+
 const accountsSlice = createSlice({
     name: 'accounts',
     initialState: initalAccountsState,
     reducers: {
         providerLoaded(state,action) {
-            const provider = new ethers.providers.Web3Provider(action.payload.connection);
-            provider.getNetwork().then(network => {
-                state.chainId = network.chainId;
-            })
-            state.connection = action.payload.connection;
+          state.connection = action.payload.connection;
         },
         networkLoaded(state,action) {
             state.chainId = action.payload.chainId;
@@ -28,9 +61,41 @@ const accountsSlice = createSlice({
         ethersBalanceLoaded(state,action){
             state.balance = action.payload.balance;
         }
+    },
+    extraReducers: (builder) => {
+        builder.addCase(loadProvider.fulfilled, (state,action) => {
+            state.connection = action.payload
+        });
+        builder.addCase(loadNetwork.fulfilled, (state,action) =>{
+            state.chainId = action.payload
+        })
+        builder.addCase(loadAccount.fulfilled, (state,action) => { 
+            state.account = action.payload
+        });
     }
 });
 
 export const accountActions = accountsSlice.actions;
 
 export default accountsSlice.reducer;
+
+
+
+  // const loadBlockChainData = async () => {
+  //   try {
+  //     const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        
+  //     const provider = new ethers.providers.Web3Provider(window.ethereum);
+  //     const network = await provider.getNetwork();
+
+  //     dispatch(accountActions.providerLoaded({ connection: provider }));
+  //     dispatch(accountActions.networkLoaded({ chainId: network.chainId }));
+  //     dispatch(accountActions.accountLoaded({ account: accounts[0] }));
+
+  //     console.log(provider);
+  //     console.log(network.chainId);
+  //     console.log(account.selectedAddress);
+  //   } catch (error) {
+  //     console.error("Error loading blockchain data:", error);
+  //   }
+  // };

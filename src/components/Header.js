@@ -3,10 +3,17 @@ import classes from './Header.module.css';
 
 // state handler
 import {authActions} from '../store/auth';
+import { accountActions } from '../store/accounts';
 
 const Header = () => {
   const dispatch = useDispatch();
   const isAuth = useSelector(state => state.auth.isAuthenticated);
+  const provider = useSelector(state => state.accounts.connection);
+  const network = useSelector(state => state.accounts.chainId);
+  const account = useSelector(state => state.accounts.account);
+  const balance = useSelector(state => state.accounts.balance);
+
+
 
   const logOutHandler = (event) => {
     event.preventDefault();
