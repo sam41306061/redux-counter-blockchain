@@ -3,7 +3,7 @@ import classes from './Header.module.css';
 
 // state handler
 import {authActions} from '../store/auth';
-import { accountActions } from '../store/accounts';
+import { loadProvider,loadNetwork,loadAccount,loadBalance } from '../store/accounts';
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -12,6 +12,13 @@ const Header = () => {
   const network = useSelector(state => state.accounts.chainId);
   const account = useSelector(state => state.accounts.account);
   const balance = useSelector(state => state.accounts.balance);
+
+  const networkHandler = async (e) => {
+    await window.ethereum.request({
+      method: 'wallet_switchEthereumChain',
+      params: [{ network: e.target.value }],
+    })
+  }
 
 
 
@@ -26,11 +33,16 @@ const Header = () => {
         <nav>
         <ul>
           <li>
-            <a href='/'>My Products</a>
+            <a href='/'>Connect Account</a>
           </li>
           <li>
-            <a href='/'>My Sales</a>
+            <p><small>{Number(balance).toFixed(4)}</small></p>
           </li>
+          {network && (
+          <li>
+            <button herf='' value={[network] ? `0x${network.toString(16)}` : `0`} onClick={networkHandler()}>Select Network</button>
+          </li>
+          )}
           <li>
             <button onClick={logOutHandler}>Logout</button>
           </li>

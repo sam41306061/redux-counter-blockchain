@@ -37,8 +37,9 @@ export const loadBalance = createAsyncThunk(
     'accounts/loadBalance',
     async() => {
         const provider = new ethers.providers.Web3Provider(window.ethereum);
-        const account = await window.ethereum.request({ method: 'eth_requestAccounts' });
-        const balance = await provider.getBalance(account)
+        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        const account = accounts[0];
+        const balance = await provider.getBalance(account);
         return balance;
     }
 )
@@ -72,6 +73,9 @@ const accountsSlice = createSlice({
         builder.addCase(loadAccount.fulfilled, (state,action) => { 
             state.account = action.payload
         });
+        builder.addCase(loadBalance.fulfilled, (state, action) =>{
+            state.balance = action.payload
+        })
     }
 });
 
