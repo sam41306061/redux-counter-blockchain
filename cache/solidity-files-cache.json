@@ -1,8 +1,8 @@
 {
   "_format": "hh-sol-cache-2",
   "files": {
-    "/Users/sam4130/Documents/coding-challenge/Redux-starter-kit/redux-counter-blockchain/contracts/Counter.sol": {
-      "lastModificationDate": 1692936400480,
+    "/Users/sam4130/Documents/Code/redux-counter-blockchain/contracts/Counter.sol": {
+      "lastModificationDate": 1698412797265,
       "contentHash": "ba77e6d5c12dcad09797ddb4f58be9bf",
       "sourceName": "contracts/Counter.sol",
       "solcConfig": {
@@ -38,8 +38,8 @@
         "Counter"
       ]
     },
-    "/Users/sam4130/Documents/coding-challenge/Redux-starter-kit/redux-counter-blockchain/node_modules/hardhat/console.sol": {
-      "lastModificationDate": 1692534231496,
+    "/Users/sam4130/Documents/Code/redux-counter-blockchain/node_modules/hardhat/console.sol": {
+      "lastModificationDate": 1698412680697,
       "contentHash": "cc4777addd464ea56fa35b1c45df0591",
       "sourceName": "hardhat/console.sol",
       "solcConfig": {
@@ -73,8 +73,8 @@
         "console"
       ]
     },
-    "/Users/sam4130/Documents/coding-challenge/Redux-starter-kit/redux-counter-blockchain/contracts/Greeter.sol": {
-      "lastModificationDate": 1692936652281,
+    "/Users/sam4130/Documents/Code/redux-counter-blockchain/contracts/Greeter.sol": {
+      "lastModificationDate": 1698412797265,
       "contentHash": "ef20aa33308269d0bac39f439e489ee8",
       "sourceName": "contracts/Greeter.sol",
       "solcConfig": {
