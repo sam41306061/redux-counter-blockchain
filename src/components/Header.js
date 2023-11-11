@@ -20,9 +20,9 @@ const Header = () => {
     })
   }
 
-const connectHandler = async() =>{
-  await loadAccount(provider, dispatch);
-}
+  const connectHandler = async () => {
+    await loadAccount(provider, dispatch);
+  }
 
   const logOutHandler = (event) => {
     event.preventDefault();
@@ -36,17 +36,27 @@ const connectHandler = async() =>{
           <ul>
             {account ? (
               <li>
-              <a href='/'>{account.slice(0,5) + '...' + account.slice(38,42)}</a>
+                <a href='/'>{account.slice(0, 5) + '...' + account.slice(38, 42)}</a>
+              </li>
+            ) : (
+              <li>
+                <a href='/' onClick={connectHandler}>Connect Account</a>
+              </li>
+            )}
+            {balance ? (
+              <li>
+                <p><small>{Number(balance).toFixed(16)}</small></p>
+              </li>
+            ) : (
+              <li>
+                <p><small>0.000</small></p>
+              </li>
+            )}
+            {network ?  (
+              <li>
+              <button herf='' value={[network] ? `0x${network.toString(16)}` : `0`} onClick={networkHandler()}>Select Network</button>
             </li>
             ):(
-              <li>
-              <a href='/' onClick={connectHandler}>Connect Account</a>
-            </li>
-            )}
-            <li>
-              <p><small>{Number(balance).toFixed(4)}</small></p>
-            </li>
-            {network && (
               <li>
                 <button herf='' value={[network] ? `0x${network.toString(16)}` : `0`} onClick={networkHandler()}>Select Network</button>
               </li>
