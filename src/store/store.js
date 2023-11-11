@@ -2,7 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 
 import counterReducer from './counter';
 import authReducer from './auth';
-import accountsReducer from './accounts';
+import { reducer as accountsReducer } from './accounts';
 
 const store = configureStore({
   reducer: {

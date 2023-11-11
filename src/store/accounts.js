@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import { ethers } from "ethers";
+//import COUNTER from '../abis/Counter.json';
 
 const initalAccountsState = {
     connection: null,
@@ -8,77 +9,49 @@ const initalAccountsState = {
     balance: null
 }
 
-export const loadProvider = createAsyncThunk(
-    'accounts/loadProvider',
-    async() => {
-        const connection = new ethers.providers.Web3Provider(window.ethereum)
-        return connection;
-    }
-);
+export const loadProvider = createAsyncThunk('accounts/loadProvider', async () => {
+    const connection = new ethers.providers.Web3Provider(window.ethereum);
+    return connection;
+  });
+  
 
-export const loadNetwork = createAsyncThunk(
-    'accounts/loadNetwork',
-    async() => {
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
-        const network = await provider.getNetwork();
-        return network;
-    }
-)
+// Thunk to load network
+export const loadNetwork = createAsyncThunk('accounts/loadNetwork', async (_, { getState }) => {
+    const provider = getState().accounts.connection;
+    const { chainId } = await provider.getNetwork();
+    return chainId;
+  });
 
-export const loadAccount = createAsyncThunk(
-    'accounts/loadAccount',
-    async() => {
-        const account = await window.ethereum.request({ method: 'eth_requestAccounts' });
-        return account[0];
-    }
-);
-
-export const loadBalance = createAsyncThunk(
-    'accounts/loadBalance',
-    async() => {
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
-        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-        const account = accounts[0];
-        const balance = await provider.getBalance(account);
-        return balance;
-    }
-)
+// Thunk to load account
+export const loadAccount = createAsyncThunk('accounts/loadAccount', async (_, { getState }) => {
+    const provider = getState().accounts.connection;
+    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+    const account = ethers.utils.getAddress(accounts[0]);
+  
+    let balance = await provider.getBalance(account);
+    balance = ethers.utils.formatEther(balance);
+  
+    return { account, balance };
+  });
 
 
 
 const accountsSlice = createSlice({
     name: 'accounts',
     initialState: initalAccountsState,
-    reducers: {
-        providerLoaded(state,action) {
-          state.connection = action.payload.connection;
-        },
-        networkLoaded(state,action) {
-            state.chainId = action.payload.chainId;
-        },
-        accountLoaded(state,action) {
-            state.account = action.payload.account;
-        },
-        ethersBalanceLoaded(state,action){
-            state.balance = action.payload.balance;
-        }
-    },
+    reducers:{},
     extraReducers: (builder) => {
-        builder.addCase(loadProvider.fulfilled, (state,action) => {
-            state.connection = action.payload
-        });
-        builder.addCase(loadNetwork.fulfilled, (state,action) =>{
-            state.chainId = action.payload
-        })
-        builder.addCase(loadAccount.fulfilled, (state,action) => { 
-            state.account = action.payload
-        });
-        builder.addCase(loadBalance.fulfilled, (state, action) =>{
-            state.balance = action.payload
-        })
+        builder.addCase(loadProvider.fulfilled, (state, action) => {
+            state.connection = action.payload;
+          })
+          .addCase(loadNetwork.fulfilled, (state, action) => {
+            state.chainId = action.payload;
+          })
+          .addCase(loadAccount.fulfilled, (state, action) => {
+            state.account = action.payload.account;
+            state.balance = action.payload.balance;
+          })
     }
 });
-
-export const accountActions = accountsSlice.actions;
-
-export default accountsSlice.reducer;
+// Export the actions and reducer
+export const { reducer } = accountsSlice;
