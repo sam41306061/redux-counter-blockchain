@@ -3,7 +3,7 @@ import classes from './Header.module.css';
 
 // state handler
 import {authActions} from '../store/auth';
-import { loadAccount } from '../store/accounts';
+import { loadAccount, loadBalance } from '../store/accounts';
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -21,6 +21,7 @@ const Header = () => {
   }
   const connectHandler = async() =>{
     await loadAccount(provider, dispatch);
+
   }
   const logOutHandler = (event) => {
     event.preventDefault();
@@ -42,7 +43,7 @@ const Header = () => {
             </li>
             )}
             <li>
-              <p><small>{Number(balance).toFixed(4)}</small></p>
+            <p><small>{balance}</small></p>
             </li>
             {network && (
               <li>

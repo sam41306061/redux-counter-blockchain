@@ -14,22 +14,20 @@ import { accountActions } from './store/accounts';
 function App() {
   const dispatch = useDispatch();
   const isAuth = useSelector(state => state.auth.isAuthenticated);
-  const account = useSelector(state => state.accounts.account);
+  const accounts = useSelector(state => state.accounts.account);
 
   const loadBlockChainData = async () => {
     try {
-      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+      const account = await window.ethereum.request({ method: 'eth_requestAccounts' });
         
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const network = await provider.getNetwork();
 
       dispatch(accountActions.providerLoaded({ connection: provider }));
       dispatch(accountActions.networkLoaded({ chainId: network.chainId }));
-      dispatch(accountActions.accountLoaded({ account: accounts[0] }));
+      dispatch(accountActions.accountLoaded({ account: account[0] }));
+      dispatch(accountActions.balanceLoaded({ balance: account[0].balance}));
 
-      console.log(provider);
-      console.log(network.chainId);
-      console.log(account.selectedAddress);
     } catch (error) {
       console.error("Error loading blockchain data:", error);
     }

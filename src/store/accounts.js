@@ -45,7 +45,6 @@ export const loadBalance = createAsyncThunk(
 )
 
 
-
 const accountsSlice = createSlice({
     name: 'accounts',
     initialState: initalAccountsState,
@@ -59,9 +58,9 @@ const accountsSlice = createSlice({
         accountLoaded(state,action) {
             state.account = action.payload.account;
         },
-        ethersBalanceLoaded(state,action){
-            state.balance = action.payload.balance;
-        }
+        balanceLoaded(state,action){
+            state.balance = action.payload.toString();
+         }
     },
     extraReducers: (builder) => {
         builder.addCase(loadProvider.fulfilled, (state,action) => {
