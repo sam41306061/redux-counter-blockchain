@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import classes from "./Header.module.css";
+import config from './config.json';
 
 // state handler
 import { authActions } from "../store/auth";
@@ -10,10 +11,10 @@ const Header = () => {
   const isAuth = useSelector((state) => state.auth.isAuthenticated);
   const account = useSelector((state) => state.accounts.account);
   const balance = useSelector((state) => state.accounts.balance);
+  const chainId = useSelector((state) => state.accounts.chainId);
   
   const connectHandler = async() => {
     dispatch(accountActions.account());
-    dispatch(accountActions.balance());
   }
 
   const logOutHandler = (event) => {
@@ -34,17 +35,13 @@ const Header = () => {
             </li>
             ):(
               <li>
-              <a href='/' onClick={connectHandler}>Connect Account</a>
+              <a  href={config[chainId] ? `${config[chainId].explorerURL}/address/${account}` : `#`} onClick={connectHandler}>Connect Account</a>
             </li>
             )}
-            {balance ? (
-              <li>
-            <p><small>{balance}</small></p>
-            </li>
-            ):(
-              <li>
-            <p><small>THis is the balance</small></p>
-            </li>
+           {balance ? (
+          <p><small>My Balance <br /></small>{Number(balance).toFixed(2)}</p>
+        ) : (
+          <p><small>My Balance</small>0 ETH</p>
         )}
             
             <li>

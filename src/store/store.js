@@ -10,6 +10,10 @@ const store = configureStore({
     auth: authReducer,
     accounts: accountsReducer
   },
+  middleware: (getDefaultMiddleware) =>
+   getDefaultMiddleware({
+     serializableCheck: false,
+   }),
 });
 
 

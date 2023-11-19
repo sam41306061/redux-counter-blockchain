@@ -21,8 +21,9 @@ export const loadNetwork = createAsyncThunk(
 export const loadAccount = createAsyncThunk(
     'accounts/loadAccount',
     async() => {
-        const account = await window.ethereum.request({ method: 'eth_requestAccounts' });
-        return account[0];
+        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        const account = ethers.utils.getAddress(accounts[0])
+        return account;
     }
 );
 
@@ -34,7 +35,7 @@ export const loadBalance = createAsyncThunk(
         const account = accounts[0];
         const balance = await provider.getBalance(account);
         const hexBalance = balance;
-        const decimalBalance = parseInt(hexBalance, 16);
+        const decimalBalance = parseInt(hexBalance, );
         return decimalBalance;
     }
 )
