@@ -9,32 +9,32 @@ import Counter from './components/Counter';
 import Header from './components/Header';
 import Auth from './components/Auth';
 import UserProfile from './components/UserProfile'
-import { accountActions } from './store/accounts';
+import { loadAccount, loadBalance, loadNetwork, loadProvider } from './store/accounts';
 
 function App() {
   const dispatch = useDispatch();
   const isAuth = useSelector(state => state.auth.isAuthenticated);
-  const accounts = useSelector(state => state.accounts.account);
-
-  const loadBlockChainData = async () => {
-    try {
-      const account = await window.ethereum.request({ method: 'eth_requestAccounts' });
-        
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const network = await provider.getNetwork();
-
-      dispatch(accountActions.providerLoaded({ connection: provider }));
-      dispatch(accountActions.networkLoaded({ chainId: network.chainId }));
-      dispatch(accountActions.accountLoaded({ account: account[0] }));
-      dispatch(accountActions.balanceLoaded({ balance: account[0].balance}));
-
-    } catch (error) {
-      console.error("Error loading blockchain data:", error);
-    }
-  };
+  
+  // const loadBlockChainData = async() => {
+  
+  //  const provider = new ethers.providers.Web3Provider(window.ethereum);
+  //   const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+  //   console.log(accounts[0]);
+  //   const account = accounts[0];
+  //   const balance = await provider.getBalance(account);
+  //   console.log(balance);
+  //   const hexBalance = balance;
+  //   const decimalBalance = parseInt(hexBalance, 16);
+  //   console.log(decimalBalance);
+  // }
+  
   useEffect(() => {
-    loadBlockChainData();
-  },[])
+    // loadBlockChainData();
+    dispatch(loadProvider());
+    dispatch(loadNetwork());
+    dispatch(loadAccount());
+    dispatch(loadBalance())
+  },[dispatch])
   return (
     <Fragment>
        <Header/> 

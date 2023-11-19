@@ -1,13 +1,6 @@
 import { createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import { ethers } from "ethers";
 
-const initalAccountsState = {
-    connection: null,
-    chainId: null,
-    account: null,
-    balance: null
-}
-
 export const loadProvider = createAsyncThunk(
     'accounts/loadProvider',
     async() => {
@@ -23,7 +16,7 @@ export const loadNetwork = createAsyncThunk(
         const network = await provider.getNetwork();
         return network;
     }
-)
+);
 
 export const loadAccount = createAsyncThunk(
     'accounts/loadAccount',
@@ -40,41 +33,36 @@ export const loadBalance = createAsyncThunk(
         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
         const account = accounts[0];
         const balance = await provider.getBalance(account);
-        return balance;
+        const hexBalance = balance;
+        const decimalBalance = parseInt(hexBalance, 16);
+        return decimalBalance;
     }
 )
 
+const initalAccountsState = {
+    connection: null,
+    chainId: null,
+    account: null,
+    balance: null
+}
 
 const accountsSlice = createSlice({
     name: 'accounts',
     initialState: initalAccountsState,
-    reducers: {
-        providerLoaded(state,action) {
-          state.connection = action.payload.connection;
-        },
-        networkLoaded(state,action) {
-            state.chainId = action.payload.chainId;
-        },
-        accountLoaded(state,action) {
-            state.account = action.payload.account;
-        },
-        balanceLoaded(state,action){
-            state.balance = action.payload.toString();
-         }
-    },
+    reducers: {},
     extraReducers: (builder) => {
         builder.addCase(loadProvider.fulfilled, (state,action) => {
             state.connection = action.payload
         });
         builder.addCase(loadNetwork.fulfilled, (state,action) =>{
             state.chainId = action.payload
-        })
+        });
         builder.addCase(loadAccount.fulfilled, (state,action) => { 
             state.account = action.payload
         });
         builder.addCase(loadBalance.fulfilled, (state, action) =>{
             state.balance = action.payload
-        })
+        });
     }
 });
 
