@@ -10,8 +10,6 @@ const Header = () => {
   const isAuth = useSelector((state) => state.auth.isAuthenticated);
   const account = useSelector((state) => state.accounts.account);
   const balance = useSelector((state) => state.accounts.balance);
-  console.log(account);
-  console.log(balance);
   
   const connectHandler = async() => {
     dispatch(accountActions.account());
