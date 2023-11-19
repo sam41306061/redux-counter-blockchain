@@ -34,11 +34,12 @@ export const loadBalance = createAsyncThunk(
         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
         const account = accounts[0];
         const balance = await provider.getBalance(account);
-        const hexBalance = balance;
-        const decimalBalance = parseInt(hexBalance, );
+        const balanceInEther = ethers.utils.formatEther(balance);
+        const decimalBalance = parseFloat(balanceInEther).toFixed(4);
         return decimalBalance;
     }
-)
+ )
+ 
 
 const initalAccountsState = {
     connection: null,

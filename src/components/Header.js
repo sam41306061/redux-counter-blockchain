@@ -35,11 +35,11 @@ const Header = () => {
             </li>
             ):(
               <li>
-              <a  href={config[chainId] ? `${config[chainId].explorerURL}/address/${account}` : `#`} onClick={connectHandler}>Connect Account</a>
+              <a href={config[chainId] ? `${config[chainId].explorerURL}/address/${account}` : `#`} onClick={connectHandler}>Connect Account</a>
             </li>
             )}
            {balance ? (
-          <p><small>My Balance <br /></small>{Number(balance).toFixed(2)}</p>
+          <p><small>My Balance <br /></small>{balance}</p>
         ) : (
           <p><small>My Balance</small>0 ETH</p>
         )}
