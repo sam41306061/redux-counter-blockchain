@@ -6,7 +6,7 @@ async function main() {
    const provider = ethers.getDefaultProvider('http://127.0.0.1:8545/'); // Replace with the name of the network you are using
 
    // Fetch the contract
-   const contractAddress = '0x5fbdb2315678afecb367f032d93f642f64180aa3'; // Replace with your contract address
+   const contractAddress = '0x5FbDB2315678afecb367f032d93F642f64180aa3'; // Replace with your contract address
    const abi = [
         {
         "inputs": [],

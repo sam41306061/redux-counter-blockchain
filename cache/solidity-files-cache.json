@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/Users/sam4130/Documents/Code/redux-counter-blockchain/contracts/Counter.sol": {
-      "lastModificationDate": 1698412797265,
-      "contentHash": "ba77e6d5c12dcad09797ddb4f58be9bf",
+      "lastModificationDate": 1700955458268,
+      "contentHash": "59cc942edf1c8d8dbd8d044a78bc7a66",
       "sourceName": "contracts/Counter.sol",
       "solcConfig": {
         "version": "0.8.4",
@@ -39,8 +39,8 @@
       ]
     },
     "/Users/sam4130/Documents/Code/redux-counter-blockchain/node_modules/hardhat/console.sol": {
-      "lastModificationDate": 1698412680697,
-      "contentHash": "cc4777addd464ea56fa35b1c45df0591",
+      "lastModificationDate": 1701017080661,
+      "contentHash": "896f68942c3a20e9ae3c3c5bfd3add54",
       "sourceName": "hardhat/console.sol",
       "solcConfig": {
         "version": "0.8.4",
@@ -72,37 +72,6 @@
       "artifacts": [
         "console"
       ]
-    },
-    "/Users/sam4130/Documents/Code/redux-counter-blockchain/contracts/Greeter.sol": {
-      "lastModificationDate": 1698412797265,
-      "contentHash": "ef20aa33308269d0bac39f439e489ee8",
-      "sourceName": "contracts/Greeter.sol",
-      "solcConfig": {
-        "version": "0.8.4",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [],
-      "artifacts": []
     }
   }
 }

@@ -5,7 +5,7 @@ import "hardhat/console.sol";
 
 contract Counter  {
 
-    uint256 private counter;
+    uint256 public counter;
 
     constructor() {
         counter = 0;
