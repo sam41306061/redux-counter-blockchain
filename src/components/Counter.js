@@ -3,7 +3,7 @@ import { useSelector, useDispatch, } from 'react-redux';
 import classes from './Counter.module.css';
 
 import { counterActions } from '../store/counter';
-import { fetchCounter, incrementCounter } from '../store/counter';
+import { fetchCounter, incrementCounter, decrementCounter, multiplyCounter } from '../store/counter';
 
 const Counter = () => {
   const dispatch = useDispatch();  
@@ -19,18 +19,28 @@ const Counter = () => {
     dispatch(incrementCounter());
   };
   const decrementHandler = () => {
-    dispatch(counterActions.decrement());
+    dispatch(decrementCounter());
   };
   const multiplyHandler = () => {
-    const multiplier = parseInt(input);
-    if(!isNaN(multiplier)) {
-      dispatch(counterActions.multiply(multiplier.toString())); // multiplier.toString is now the payload
+    const inputValue = parseFloat(input);
+    if(!isNaN(inputValue)) {
+      dispatch(multiplyCounter(inputValue));
       setInput('');
     } else {
-      console.log('Input is not validnumber')
+      console.log('Input is not a valid number')
     }
+   };
     
-  }
+
+  //   const multiplier = parseInt(input);
+  //   if(!isNaN(multiplier)) {
+  //     dispatch(counterActions.multiply(multiplier.toString())); // multiplier.toString is now the payload
+  //     setInput('');
+  //   } else {
+  //     console.log('Input is not validnumber')
+  //   }
+    
+  // }
   const toggleCounterHandler = () => {
     dispatch(counterActions.toggle());
   };
